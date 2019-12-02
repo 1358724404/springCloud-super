@@ -1,0 +1,31 @@
+server:
+  port: 9090
+spring:
+  thymeleaf:
+    cache: false
+  application:
+    name: index-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/,http://localhost:8082/eureka/
+    registry-fetch-interval-seconds: 30
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+product-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+#改变轮询策略
+#    com.netflix.loadbalancer.RoundRobinRule ：轮询策略
+#    com.netflix.loadbalancer.RandomRule ：随机策略
+#    com.netflix.loadbalancer.WeightedResponseTimeRule ：权重策略
+#    com.netflix.loadbalancer.BestAvailableRule ：最佳策略。遍历所有的服务实例，过滤掉故障实例，并返回请求 数小的实例返回。
+#    com.netflix.loadbalancer.AvailabilityFilteringRule ：可用过滤策略。过滤掉故障和请求数超过阈值的服务 实例，再从剩下的实例中轮询调用。
+feign:
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
