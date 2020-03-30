@@ -13,6 +13,12 @@
         <module>index-service</module>
         <module>product-service</module>
         <module>eureka-server</module>
+        <module>hystrix_turbine</module>
+        <module>api-zuul-service</module>
+        <module>gateway-service</module>
+        <module>config-service</module>
+        <module>zipkin-server</module>
+        <module>config-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -5,6 +5,11 @@ spring:
     cache: false
   application:
     name: index-service
+  zipkin:
+    base-url: http://localhost:8089
+  sleuth:
+    sampler:
+      probability: 1.0
 
 eureka:
   client:
@@ -29,3 +34,31 @@ feign:
       enabled: true
     response:
       enabled: true
+  hystrix:
+    enabled: true
+logging:
+  level:
+    root: info
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: ExecutionIsolationStrategy.SEMAPHORE #信号量隔离（处理不完的请求直接丢弃）
+          # ExecutionIsolationStrategy.THREAD 线程池隔离 (处理不完的请求进入等待队列，可应对高并发)
+          thread:
+            timeoutInMilliseconds: 3000 #默认的连接超时时间1秒,若1秒没有返回数据,自动的触发降级逻辑
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 5 #触发熔断的最小请求次数，默认20
+        errorThresholdPercentage: 10 #触发熔断的失败请求最小占比，默认50%
+        sleepWindowInMilliseconds: 10000 #熔断多少秒后去尝试请求，默认是5S
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -11,6 +11,11 @@ spring:
 
   application:
     name: product-service
+  zipkin:
+    base-url: http://localhost:8089
+  sleuth:
+    sampler:
+      probability: 1.0
 
 ---
   spring:
@@ -39,10 +44,11 @@ spring:
       lease-renewal-interval-in-seconds: 30
       lease-expiration-duration-in-seconds: 90
 ---
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8080/eureka/
+logging:
+  level:
+    root: info
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.cloud.sleuth: DEBUG
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   configuration:
